@@ -66,27 +66,36 @@ struct SListNode {
 class MergeSort {
 public:
     SListNode* Sort(SListNode* head) {
-        if (!head && !(head)->next) return head;
-        SListNode *fast = head, *slow = head;
-        while(fast && fast->next && fast->next->next) {
-            fast = fast->next->next;
-            slow = slow->next;
+        if (!head) return head;
+        if (!(head)->next) return nullptr;
+        SListNode *fast = head->next, *slow = head;
+        while(fast) {
+            fast = fast->next;
+            if (fast != nullptr) {
+                slow = slow->next;
+                fast = fast->next;
+            }
         }
-        if (slow == fast) return  head;
         SListNode* s = slow->next;
         (*slow).next = nullptr;
         SListNode* f = head;
+        cout << "f : ";
+        Print(f);
+        cout << "s : ";
+        Print(s);
         f = Sort(f);
         s = Sort(s);
+        
+        cout << "MERGED\n";
         auto merged = Merge(f, s);
+        Print(merged);
+        cout << "----------------\n";
         return merged;
     }
     
     SListNode* Merge(SListNode* f, SListNode* s) {
         if (!f) return s;
         if (!s) return f;
-        Print(f);
-        Print(s);
         SListNode* ret_head = nullptr;
         if (f->val < s->val) {
             ret_head = f;
@@ -150,7 +159,7 @@ int main() {
 
     // Merge sort
     
-    vector<int> m_in {1, 5,80,90, 10, 15, 10,  60};
+    vector<int> m_in {1, 5,80,90, 10, 15, 10,  60, 70};
     MergeSort m;
     auto head = m.CreateSList(m_in);
     m.Print(head);
