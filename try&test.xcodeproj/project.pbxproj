@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E887C4E11F8062D200859997 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E887C4E01F8062D100859997 /* main.cpp */; };
+		E857400C1FBC852A00E71918 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E887C4E01F8062D100859997 /* main.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,6 +23,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E81F92301F944CD300FCCFA9 /* tmp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tmp.cpp; sourceTree = "<group>"; };
+		E825C9BC1FA371F400E4850F /* trie.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = trie.cpp; sourceTree = "<group>"; };
+		E857400A1FB7AB8500E71918 /* thread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread.cpp; sourceTree = "<group>"; };
 		E887C4DD1F8062D100859997 /* try&test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "try&test"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E887C4E01F8062D100859997 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -58,6 +61,9 @@
 			isa = PBXGroup;
 			children = (
 				E887C4E01F8062D100859997 /* main.cpp */,
+				E81F92301F944CD300FCCFA9 /* tmp.cpp */,
+				E825C9BC1FA371F400E4850F /* trie.cpp */,
+				E857400A1FB7AB8500E71918 /* thread.cpp */,
 			);
 			path = "try&test";
 			sourceTree = "<group>";
@@ -119,7 +125,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E887C4E11F8062D200859997 /* main.cpp in Sources */,
+				E857400C1FBC852A00E71918 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,7 +238,9 @@
 		E887C4E51F8062D200859997 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CODE_SIGN_STYLE = Automatic;
+				"OTHER_LDFLAGS[arch=*]" = "-lresolv";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -240,7 +248,9 @@
 		E887C4E61F8062D200859997 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CODE_SIGN_STYLE = Automatic;
+				"OTHER_LDFLAGS[arch=*]" = "-lresolv";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
