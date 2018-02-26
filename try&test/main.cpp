@@ -145,6 +145,51 @@ public:
     }
 };
 
+
+class ArrayHeap {
+public:
+    void heapify(vector<int>& v, int len, int i) {
+        int lar = i;
+        int l = (2*i) + 1, r = (2*i) + 2;
+        
+        if ((l < len) && v[lar] < v[l]) {
+            lar = l;
+        }
+        if ((r < len) && v[lar] < v[r]) {
+            lar = r;
+        }
+        if (lar != i) {
+            swap(v[lar], v[i]);
+            heapify(v, len, lar);
+        }
+    }
+    
+    void swap(int& a, int&b) {
+        int t = a;
+        a = b;
+        b = t;
+    }
+    void Print(vector<int>& v) {
+        for (auto& i :v) {
+            cout << i << " ";
+        }
+        cout <<  endl;
+    }
+    void HeapSort(vector<int>& v, int len) {
+        if (v.size() <= 0) return;
+        static int j = 0;
+        for (int i = (len/2)-1; i >= 0; --i) {
+            heapify(v, len, i);
+            cout << j++ << endl;
+        }
+        for (int i = len-1; i >= 0; --i) {
+            swap(v[0], v[i]);
+            heapify(v, i, 0);
+        }
+    }
+    
+};
+
 int main() {
 #if 0
     // Quick sort
@@ -157,6 +202,7 @@ int main() {
     cout <<  endl;
 #endif
 
+#if 0
     // Merge sort
     
     vector<int> m_in {1, 5,80,90, 10, 15, 10,  60, 70};
@@ -166,4 +212,10 @@ int main() {
     head = m.Sort(head);
     m.Print(head);
     return 0;
+#endif
+    vector<int> h_in {1, 5,80,90, 10, 15, 10,  60, 70};
+    ArrayHeap a;
+    a.HeapSort(h_in, 9);
+    a.Print(h_in);
+    
 }
