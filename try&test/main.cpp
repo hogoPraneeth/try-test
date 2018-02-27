@@ -191,9 +191,42 @@ public:
     
 };
 
-#define QUICK 1
-#define MERGE 1
-#define ARRHEAP 1
+struct TreeNode {
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int v) : val(v), left(nullptr), right(nullptr) {
+//        cout << "new node : " << val << endl;
+    }
+};
+
+class TreeHeap {
+public:
+    TreeNode* BuildHeapTree(vector<int>& in, size_t idx, TreeNode* root) {
+        if (idx >= in.size()) return nullptr;
+        if (!root)
+            root = new TreeNode(in[idx]);
+        root->left = BuildHeapTree(in, (2*idx) + 1, root->left);
+        root->right = BuildHeapTree(in, (2*idx) + 2, root->right);
+        return root;
+       
+    }
+    void PrintTree(TreeNode* root) {
+        if (!root) return;
+        cout << "\n" <<root->val<< "\n";
+        if(root->left)
+            cout << root->left->val << "  ";
+        if (root->right)
+            cout << root->right->val << endl;
+        PrintTree(root->left);
+        PrintTree(root->right);
+    }
+};
+
+#define QUICK 0
+#define MERGE 0
+#define ARRHEAP 0
+#define TREEHEAP 1
 
 int main() {
 #if QUICK
@@ -225,5 +258,15 @@ int main() {
     a.HeapSort(h_in, 9);
     a.Print(h_in);
 #endif
+    
+#if TREEHEAP
+    cout << "TREE Based Heap sort -----\n";
+    vector<int> t_in {1, 5,80,90, 10, 15, 10,  60, 70};
+    TreeHeap t;
+    TreeNode* root = nullptr;
+    auto h_root = t.BuildHeapTree(t_in, 0, root);
+    t.PrintTree(h_root);
+#endif
 
+    return 0;
 }
