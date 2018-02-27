@@ -27,6 +27,12 @@ struct ListNode {
 
 class QuickSort {
 public:
+    void Print(vector<int>& v) {
+        for (auto& i :v) {
+            cout << i << " ";
+        }
+        cout <<  endl;
+    }
     void quickSort(vector<int>& in) {
         if (in.size() < 2) return;
         quickSort(in, 0, in.size()-1);
@@ -50,7 +56,6 @@ public:
                 swap(in[i], in[sm++]);
             }
         }
-        cout << " hi " << in[high] << " sm " << in[sm] << endl;
         swap(in[high], in[sm]);
         return static_cast<int>(sm);
     }
@@ -65,32 +70,30 @@ struct SListNode {
 
 class MergeSort {
 public:
-    SListNode* Sort(SListNode* head) {
-        if (!head) return head;
-        if (!(head)->next) return nullptr;
-        SListNode *fast = head->next, *slow = head;
-        while(fast) {
+    void Split(SListNode* head, SListNode** f, SListNode** s) {
+        if (!head) return;
+        SListNode* fast = head->next;
+        SListNode* slow = head;
+        while(fast != nullptr) {
             fast = fast->next;
-            if (fast != nullptr) {
+            if (fast) {
                 slow = slow->next;
                 fast = fast->next;
             }
         }
-        SListNode* s = slow->next;
-        (*slow).next = nullptr;
-        SListNode* f = head;
-        cout << "f : ";
-        Print(f);
-        cout << "s : ";
-        Print(s);
-        f = Sort(f);
-        s = Sort(s);
+        *s = slow->next;
+        slow->next = nullptr;
+        *f = head;
+    }
+
+    void Sort(SListNode** head) {
+        if (!*head || !(*head)->next) return;
         
-        cout << "MERGED\n";
-        auto merged = Merge(f, s);
-        Print(merged);
-        cout << "----------------\n";
-        return merged;
+        SListNode *f, *s;
+        Split(*head, &f,  &s);
+        Sort(&f);
+        Sort(&s);
+        *head = Merge(f, s);
     }
     
     SListNode* Merge(SListNode* f, SListNode* s) {
@@ -115,8 +118,6 @@ public:
             }
             ret_tail = ret_tail->next;
         }
-        Print(f);
-        Print(s);
         ret_tail->next =  f == nullptr ? s : f;
         return ret_head;
     }
@@ -169,18 +170,18 @@ public:
         a = b;
         b = t;
     }
+
     void Print(vector<int>& v) {
         for (auto& i :v) {
             cout << i << " ";
         }
         cout <<  endl;
     }
+
     void HeapSort(vector<int>& v, int len) {
         if (v.size() <= 0) return;
-        static int j = 0;
         for (int i = (len/2)-1; i >= 0; --i) {
             heapify(v, len, i);
-            cout << j++ << endl;
         }
         for (int i = len-1; i >= 0; --i) {
             swap(v[0], v[i]);
@@ -190,32 +191,39 @@ public:
     
 };
 
+#define QUICK 1
+#define MERGE 1
+#define ARRHEAP 1
+
 int main() {
-#if 0
+#if QUICK
+    cout << "Quick sort -----\n";
     // Quick sort
     vector<int> in {1, 5,80,90, 10, 15, 10,  60};
     QuickSort q;
+    q.Print(in);
     q.quickSort(in);
-    for (auto& i : in) {
-        cout << i << " ";
-    }
-    cout <<  endl;
+    q.Print(in);
 #endif
 
-#if 0
+#if MERGE
     // Merge sort
-    
+    cout << "Merge sort -----\n";
     vector<int> m_in {1, 5,80,90, 10, 15, 10,  60, 70};
     MergeSort m;
     auto head = m.CreateSList(m_in);
     m.Print(head);
-    head = m.Sort(head);
+    m.Sort(&head);
     m.Print(head);
-    return 0;
 #endif
+    
+#if ARRHEAP
+    cout << "Array Based Heap sort -----\n";
     vector<int> h_in {1, 5,80,90, 10, 15, 10,  60, 70};
     ArrayHeap a;
+    a.Print(h_in);
     a.HeapSort(h_in, 9);
     a.Print(h_in);
-    
+#endif
+
 }
