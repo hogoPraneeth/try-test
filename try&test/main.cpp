@@ -222,12 +222,13 @@ public:
         PrintTree(root->right);
     }
 };
-
+#define MAIN 0
 #define QUICK 0
 #define MERGE 0
 #define ARRHEAP 0
-#define TREEHEAP 1
+#define TREEHEAP 0
 
+#if MAIN
 int main() {
 #if QUICK
     cout << "Quick sort -----\n";
@@ -269,4 +270,31 @@ int main() {
 #endif
 
     return 0;
+}
+#endif
+
+#include <vector>
+#include <iostream>
+#include <memory>
+
+using namespace std;
+
+unique_ptr<int>& get(bool a) {
+    if (a) {
+        static unique_ptr<int> a = make_unique<int>(1000);
+        return a;
+    } else {
+        static unique_ptr<int> b = nullptr;
+        return b;
+    }
+}
+
+int main()
+{
+    if (auto& a = get(true)) {
+        cout << *a << endl;
+    }
+    if (get(false) == nullptr) {
+        cout << "nah" << endl;
+    }
 }
